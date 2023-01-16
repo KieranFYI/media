@@ -31,6 +31,6 @@
         "kieranfyi/roles-core": "^1.0",
         "ralouphie/mimey": "^1.0",
         "kieranfyi/admin": "^1.0.5",
-        "kieranfyi/media-core": "^0.0.3"
+        "kieranfyi/media-core": "^0.0.5"
     }
 }
