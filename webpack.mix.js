@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ mix
     /* Options */
     .options({
         processCssUrls: false
+    })
+    .alias({
+        '@admin': path.resolve(__dirname, 'vendor/kieranfyi/admin/resources/js/components')
     })
     .disableNotifications()
     .version();

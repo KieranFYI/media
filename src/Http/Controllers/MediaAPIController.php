@@ -69,10 +69,10 @@ class MediaAPIController extends Controller
      * @return JsonResponse
      * @throws Throwable
      */
-    public function show(Request $request, Media $user): JsonResponse
+    public function show(Request $request, Media $media): JsonResponse
     {
         $this->cached();
-        return response()->json($user);
+        return response()->json($media);
     }
 
     /**

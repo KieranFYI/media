@@ -9,11 +9,7 @@
 </template>
 
 <script>
-import AdminTable from '../../../vendor/kieranfyi/admin/resources/js/components/AdminTable';
 export default {
-    components: {
-        AdminTable
-    },
     data() {
         return {
             loading: true,
