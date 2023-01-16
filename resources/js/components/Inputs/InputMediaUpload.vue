@@ -9,9 +9,9 @@
         <div :class="{'col-lg-10': label !== undefined && !this.child}">
             <div class="input-group">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" :id="id" :multiple="options.multiple"
-                           :accept="options.accepts" @change="upload" :disabled="uploading">
-                    <label class="custom-file-label" :id="id" v-text="status"></label>
+                    <input type="file" class="custom-file-input" :id="id" :multiple="multiple"
+                           :accept="accepts" @change="upload" :disabled="uploading || loading">
+                    <label class="custom-file-label" :id="id" v-text="loading ? 'Loading' : status"></label>
                 </div>
             </div>
 
@@ -59,10 +59,24 @@ export default {
     data() {
         return {
             id: null,
-            status: 'Choose file',
+            status: 'Choose a file...',
             uploading: false,
             uploadErrors: [],
         };
+    },
+    computed: {
+        multiple() {
+            if (this.options === undefined || this.options === null || this.options.multiple !== null) {
+                return false;
+            }
+            return this.options.multiple;
+        },
+        accepts() {
+            if (this.options === undefined || this.options === null || this.options.accepts !== null) {
+                return [];
+            }
+            return this.options.accepts;
+        }
     },
     methods: {
         upload(event) {
@@ -76,7 +90,7 @@ export default {
             for (const file of event.target.files) {
                 formData.append("files[]", file);
             }
-
+            let $this = this;
             this.$axios
                 .post(route('admin.api.media.store'), formData, {
                     headers: {
@@ -84,18 +98,18 @@ export default {
                     },
                     onUploadProgress: function (progressEvent) {
                         let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                        this.status = 'Uploading ' + percentCompleted + '%';
+                        $this.status = 'Uploading ' + percentCompleted + '%';
                     }
                 })
                 .then((response) => {
                     if (this.multiple) {
-                        this.status = 'Files uploaded';
-                        this.$emit('updated', this.name, response.data);
+                        let ids = this.$lodash.map(response.data, 'id');
+                        this.$emit('updated', this.name, ids);
                     } else {
                         let media = response.data[0];
-                        this.status = media.file_name + ' uploaded';
-                        this.$emit('updated', this.name, media);
+                        this.$emit('updated', this.name, media.id);
                     }
+                    this.status = 'Choose a file...';
                 })
                 .catch((error) => {
                     if (!error.response) {
@@ -123,5 +137,8 @@ export default {
         this.id = Math.random().toString(36).replace(/[^a-z]+/g, '');
         this.upload = this.$lodash.debounce(this.upload, 500);
     },
+    mounted() {
+        this.status = 'Choose a file...';
+    }
 }
 </script>

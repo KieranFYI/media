@@ -59,37 +59,59 @@ export default {
         };
     },
     computed: {
+        multiple() {
+            if (this.options === undefined || this.options === null || this.options.multiple !== null) {
+                return false;
+            }
+            return this.options.multiple;
+        },
         _values() {
-            if (this.options.multiple) {
-                return this.values;
-            } else {
+            if (this.options === undefined || this.options === null || this.options.multiple !== null) {
+                if (this.value === undefined) {
+                    return [];
+                }
                 return [this.value];
             }
+
+            if (this.values === undefined) {
+                return [];
+            }
+            return this.values;
         }
     },
     methods: {
         fetchData() {
             this._loading = true;
-            for (const media of this._values) {
-                this.$axios
-                    .get(route('admin.api.media.show', {media}))
-                    .then((response) => {
-                        let media = response.data;
-                        let actions = [];
-                        if (media.access.show) {
-                            actions.push({
-                                icon: 'fas fa-times',
-                                click: this.delete,
-                                class: 'btn btn-link btn-sm text-danger'
-                            });
-                        }
-                        media['actions'] = actions;
-                        this.media.push(media);
-                        this._loading = false;
-                    });
+            let values = this._values;
+            if (values !== null) {
+                for (const media of values) {
+                    if (media === null) {
+                        continue;
+                    }
+                    this.$axios
+                        .get(route('admin.api.media.show', {media: media}))
+                        .then((response) => {
+                            let media = response.data;
+                            let actions = [];
+                            if (media.access.show) {
+                                actions.push({
+                                    icon: 'fas fa-times',
+                                    click: this.delete,
+                                    class: 'btn btn-link btn-sm text-danger px-1 py-0'
+                                });
+                            }
+                            media['actions'] = actions;
+                            this.media.push(media);
+                            this._loading = false;
+                        });
+                }
             }
         },
         updated(key, value) {
+            if (this.multiple) {
+                this.$emit('updated', key, value.concat(this._values));
+                return;
+            }
             this.$emit('updated', key, value);
         },
         delete(item) {
@@ -101,6 +123,6 @@ export default {
     },
     mounted() {
         this.fetchData();
-    },
+    }
 }
 </script>
