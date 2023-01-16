@@ -1,6 +1,7 @@
 {
     "name": "kieranfyi/media",
     "type": "project",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "KieranFYI\\Media\\": "src/"
