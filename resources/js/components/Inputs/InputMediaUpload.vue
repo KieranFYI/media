@@ -86,6 +86,7 @@ export default {
         post(event) {
             this.uploading = true;
             this.status = 'Uploading';
+            this.uploadErrors = [];
             let formData = new FormData();
             for (const file of event.target.files) {
                 formData.append("files[]", file);

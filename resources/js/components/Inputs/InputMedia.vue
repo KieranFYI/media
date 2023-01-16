@@ -8,7 +8,7 @@
         </label>
         <div :class="{'col-lg-10': label !== undefined}">
             <admin-table :columns="columns" :rows="media" :small="true" :head="false" v-if="media.length"
-                         action-location="start"/>
+                         action-location="start" :loading="_loading"/>
             <input-media-upload :name="name" :value="value" :loading="loading" :options="options"
                                 @updated="updated"/>
         </div>
@@ -103,16 +103,22 @@ export default {
                             media['actions'] = actions;
                             this.media.push(media);
                             this._loading = false;
+                        })
+                        .catch(() => {
+
                         });
                 }
             }
         },
         updated(key, value) {
+            this._loading = ture;
             if (this.multiple) {
                 this.$emit('updated', key, value.concat(this._values));
+                this.fetchData();
                 return;
             }
             this.$emit('updated', key, value);
+            this.fetchData();
         },
         delete(item) {
             console.log(item);
