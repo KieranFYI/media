@@ -19,7 +19,7 @@ class RegisterAdminNavigationListener
             ->can('viewAny')
             ->model(Media::class)
             ->route('admin.media.index')
-            ->icon('');
+            ->icon('fas fa-folder-open');
     }
 
 }
