@@ -9,7 +9,7 @@
         <div :class="{'col-lg-10': label !== undefined}">
             <admin-table :columns="columns" :rows="media" :small="true" :head="false" v-if="media.length"
                          action-location="start" :loading="_loading"/>
-            <input-media-upload :name="name" :value="value" :loading="loading" :options="options"
+            <input-media-upload :name="name" :value="value" :loading="loading" :options="options" v-if="multiple || (!multiple && media.length < 1)"
                                 @updated="updated"/>
         </div>
     </div>
@@ -111,7 +111,7 @@ export default {
             }
         },
         updated(key, value) {
-            this._loading = ture;
+            this._loading = true;
             if (this.multiple) {
                 this.$emit('updated', key, value.concat(this._values));
                 this.fetchData();
