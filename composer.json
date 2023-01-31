@@ -26,11 +26,10 @@
     "require": {
         "php": "^8.1",
         "laravel/framework": "^9.19",
-        "kieranfyi/misc": "^0.3.9",
-        "kieranfyi/logging": "^0.3.9",
-        "kieranfyi/roles-core": "^1.0",
-        "ralouphie/mimey": "^1.0",
-        "kieranfyi/admin": "^1.0.10",
-        "kieranfyi/media-core": "^0.0.5"
+        "kieranfyi/misc": "^0.3.14",
+        "kieranfyi/roles-core": "^1.0.15",
+        "kieranfyi/admin": "^1.0.12",
+        "kieranfyi/media-core": "^0.0.6",
+        "ralouphie/mimey": "^1.0"
     }
 }

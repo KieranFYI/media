@@ -19,7 +19,7 @@ export default {
             },
             columns: {
                 file_name: 'Name',
-                key: 'key',
+                user_title: 'User',
                 created_at: {
                     type: 'date',
                     label: 'Created'
