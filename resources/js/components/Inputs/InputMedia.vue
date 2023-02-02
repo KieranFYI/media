@@ -9,7 +9,8 @@
         <div :class="{'col-lg-10': label !== undefined}">
             <admin-table :columns="columns" :rows="media" :small="true" :head="false" v-if="media.length"
                          action-location="start" :loading="_loading"/>
-            <input-media-upload :name="name" :value="value" :loading="loading" :options="options" v-if="multiple || (!multiple && media.length < 1)"
+            <input-media-upload :name="name" :value="value" :loading="loading" :options="options"
+                                v-if="multiple || (!multiple && media.length < 1)"
                                 @updated="updated"/>
         </div>
     </div>
@@ -89,23 +90,18 @@ export default {
                         continue;
                     }
                     this.$axios
-                        .get(route('admin.api.media.show', {media: media}))
+                        .get(route('admin.api.media.show', {media}))
                         .then((response) => {
                             let media = response.data;
                             let actions = [];
-                            if (media.access.show) {
-                                actions.push({
-                                    icon: 'fas fa-times',
-                                    click: this.delete,
-                                    class: 'btn btn-link btn-sm text-danger px-1 py-0'
-                                });
-                            }
+                            actions.push({
+                                icon: 'fas fa-times',
+                                click: this.delete,
+                                class: 'btn btn-link btn-sm text-danger px-1 py-0'
+                            });
                             media['actions'] = actions;
                             this.media.push(media);
                             this._loading = false;
-                        })
-                        .catch(() => {
-
                         });
                 }
             }
@@ -120,8 +116,28 @@ export default {
             this.$emit('updated', key, value);
             this.fetchData();
         },
-        delete(item) {
-            console.log(item);
+        delete(media) {
+            this._loading = true;
+            this.$axios
+                .delete(route('admin.api.media.show', {media}))
+                .then(function () {
+                    let values = this._values;
+                    let index = values.indexOf(media.id);
+                    if (index > -1) {
+                        values.splice(index, 1);
+                    }
+                    if (this.multiple) {
+                        this.$emit('updated', this.key, values);
+                        return;
+                    }
+
+                    if (values.length > 0) {
+                        this.$emit('updated', this.key, values[0]);
+                        return;
+                    }
+
+                    this.$emit('updated', this.key, null);
+                });
         }
     },
     created() {
