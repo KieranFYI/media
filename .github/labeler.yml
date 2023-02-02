@@ -1,0 +1,39 @@
+# Add 'test' label to any tests changes
+github:
+  - any: [ '.github/**/*' ]
+
+# Add 'test' label to any tests changes
+tests:
+  - any: [ 'tests/**/*', 'phpunit.xml' ]
+
+# Add 'frontend` label to any resources changes
+frontend:
+  - any: [ 'resources/**/*' ]
+
+# Add 'backend` label to any app changes
+backend:
+  - any: [ 'app/**/*' ]
+
+# Add 'config` label to any app changes
+config:
+  - any: [ 'config/**/*' ]
+
+# Add 'docker` label to any app changes
+docker:
+  - any: [ 'docker/**/*' ]
+
+# Add 'config` label to any app changes
+database:
+  - any: [ 'database/**/*' ]
+
+# Add 'routes` label to any app changes
+routes:
+  - any: [ 'routes/**/*' ]
+
+# Add 'composer` label to any app changes
+composer:
+  - any: [ 'composer.json' ]
+
+# Add 'package` label to any app changes
+package:
+  - any: [ 'package.json' ]
