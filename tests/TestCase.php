@@ -3,6 +3,8 @@
 namespace KieranFYI\Tests\Media;
 
 use Illuminate\Foundation\Application;
+use JeroenNoten\LaravelAdminLte\AdminLteServiceProvider;
+use KieranFYI\Admin\Providers\AdminPackageServiceProvider;
 use KieranFYI\Logging\Providers\LoggingPackageServiceProvider;
 use KieranFYI\Media\Core\Providers\MediaCorePackageServiceProvider;
 use KieranFYI\Media\Providers\MediaPackageServiceProvider;
@@ -35,6 +37,8 @@ class TestCase extends OrchestraTestCase
             ServicesCorePackageServiceProvider::class,
             RolesCorePackageServiceProvider::class,
             MediaCorePackageServiceProvider::class,
+            AdminLteServiceProvider::class,
+            AdminPackageServiceProvider::class,
             MediaPackageServiceProvider::class
         ];
     }

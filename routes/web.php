@@ -8,10 +8,10 @@ use KieranFYI\Media\Http\Controllers\MediaController;
 Admin::route(function () {
     Route::resource('media', MediaController::class)
         ->parameter('medium', 'media')
-        ->only('index', 'create');
+        ->only('index', 'show');
 
     Route::pattern('extension', '\.{.*}');
-    Route::get('media/{media}/{version}{?extension}', [MediaController::class, 'show'])
+    Route::get('media/{version}{extension}', [MediaController::class, 'show'])
         ->name('media.show');
 
     Route::prefix('api')

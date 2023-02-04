@@ -16,7 +16,7 @@ class MediaPackageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $root = __DIR__ . '/../..';
+        $root = realpath(__DIR__ . '/../..');
         config([
             'ziggy.groups.media' => ['admin.media.*'],
             'ziggy.groups.media-api' => ['admin.api.media.*']
