@@ -12,7 +12,7 @@ frontend:
 
 # Add 'backend` label to any app changes
 backend:
-  - any: [ 'app/**/*' ]
+  - any: [ 'src/**/*' ]
 
 # Add 'config` label to any app changes
 config:
