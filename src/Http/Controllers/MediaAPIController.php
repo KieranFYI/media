@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use KieranFYI\Logging\Traits\LoggableResponse;
 use KieranFYI\Media\Core\Facades\MediaStorage;
@@ -64,12 +63,11 @@ class MediaAPIController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
-     * @param Media $user
+     * @param Media $media
      * @return JsonResponse
      * @throws Throwable
      */
-    public function show(Request $request, Media $media): JsonResponse
+    public function show(Media $media): JsonResponse
     {
         $this->cached();
         return response()->json($media);
@@ -112,7 +110,7 @@ class MediaAPIController extends Controller
         return response()->json($users->paginate());
     }
 
-    /**\\
+    /**
      * Get the map of resource methods to ability names.
      *
      * @return array

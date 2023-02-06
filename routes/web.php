@@ -8,19 +8,13 @@ use KieranFYI\Media\Http\Controllers\MediaController;
 Admin::route(function () {
     Route::resource('media', MediaController::class)
         ->parameter('medium', 'media')
-        ->only('index', 'show');
+        ->only('index');
+});
 
-    Route::pattern('extension', '\.{.*}');
-    Route::get('media/{version}{extension}', [MediaController::class, 'show'])
-        ->name('media.show');
-
-    Route::prefix('api')
-        ->name('api.')
-        ->group(function () {
-            Route::resource('media', MediaAPIController::class)
-                ->parameter('media', 'media')
-                ->except('create', 'edit');
-            Route::post('media/search', [MediaAPIController::class, 'search'])
-                ->name('media.search');
-        });
+Admin::api(function () {
+    Route::resource('media', MediaAPIController::class)
+        ->parameter('media', 'media')
+        ->except('create', 'edit');
+    Route::post('media/search', [MediaAPIController::class, 'search'])
+        ->name('media.search');
 });

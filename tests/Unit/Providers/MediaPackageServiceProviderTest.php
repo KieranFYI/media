@@ -2,6 +2,7 @@
 
 namespace KieranFYI\Tests\Media\Unit\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -13,6 +14,11 @@ use KieranFYI\Tests\Media\TestCase;
 
 class MediaPackageServiceProviderTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
     public function testBootConfig()
     {
         $admin = config('ziggy.groups.media');

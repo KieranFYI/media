@@ -6,7 +6,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
-use KieranFYI\Media\Core\Facades\MediaStorage;
 use KieranFYI\Media\Core\Models\Media;
 use KieranFYI\Media\Core\Models\MediaVersion;
 use KieranFYI\Misc\Traits\ResponseCacheable;
@@ -39,19 +38,6 @@ class MediaController extends Controller
     {
         $this->cached();
         return view('media::index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param MediaVersion $version
-     * @param string $extension
-     * @return StreamedResponse
-     * @throws Throwable
-     */
-    public function show(MediaVersion $version, string $extension): StreamedResponse
-    {
-        return MediaStorage::response($version, $extension);
     }
 
     /**
